@@ -46,9 +46,29 @@ linearregressor.fit(X_train,y_train)
 #predicting values of train
 y_predict = linearregressor.predict(X_test)
 
-#building optimal model using backward elimination
-import statsmodels.api as sm
+#building optimal model using backward elimination and used r formula
+import statsmodels.formula.api as sm
 X = np.append(arr = np.ones((50,1)).astype(int) ,values = X , axis =1)
 X_Opt = X[:,[0,1,2,3,4,5]]
-regressor_OLS = sm.OLS(endog = y , exog = X_Opt).fit() #ordinary least square
+regressor_OLS = sm.ols(formula = 'y ~ X_Opt', data = dataset).fit() #ordinary least square
 regressor_OLS.summary()
+X_Opt = X[:,[0,1,3,4,5]]
+regressor_OLS = sm.ols(formula = 'y ~ X_Opt', data = dataset).fit() #ordinary least square
+regressor_OLS.summary()
+X_Opt = X[:,[0,3,4,5]]
+regressor_OLS = sm.ols(formula = 'y ~ X_Opt', data = dataset).fit() #ordinary least square
+regressor_OLS.summary()
+X_Opt = X[:,[0,3,5]]
+regressor_OLS = sm.ols(formula = 'y ~ X_Opt', data = dataset).fit() #ordinary least square
+regressor_OLS.summary()
+X_Opt = X[:,[0,3]]
+regressor_OLS = sm.ols(formula = 'y ~ X_Opt', data = dataset).fit() #ordinary least square
+regressor_OLS.summary()
+
+
+# this is how im testing my model with xopt 
+X_train1,X_test1,y_train1,y_test1 = train_test_split(X_Opt, y , test_size = 0.2 , random_state = 0)
+
+linearregressor.fit(X_train1,y_train1)
+
+y_predict1 = linearregressor.predict(X_test1)
